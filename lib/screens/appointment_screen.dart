@@ -128,71 +128,90 @@ class AppointmentScreen extends StatelessWidget {
                 //INI RINCIAN DOKTER
                 child: Column(
                   children: List.generate(3, (index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PesanDokterScreen(),
-                            ));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: 20, bottom: 20, left: 30, right: 30),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 4,
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage:
-                                      AssetImage("images/doctor1.png"),
+                    return Container(
+                      margin: EdgeInsets.only(
+                          top: 20, bottom: 20, left: 30, right: 30),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundImage:
+                                    AssetImage("images/doctor1.png"),
+                              ),
+                              const Text(
+                                "dr. M. Salaman",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54,
                                 ),
-                                const Text(
-                                  "dr. M. Salaman",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black54,
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    color: Colors.black,
+                                    size: 18,
                                   ),
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.black,
-                                      size: 18,
+                                  Text(
+                                    "4.5",
+                                    style: TextStyle(
+                                      color: Colors.black45,
+                                      fontSize: 14,
                                     ),
-                                    Text(
-                                      "4.5",
-                                      style: TextStyle(
-                                        color: Colors.black45,
-                                        fontSize: 14,
-                                      ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PesanDokterScreen(),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                  );
+                                },
+                                child: Text("Konsultasi Online"),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // navigate to offline consultation screen
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PesanDokterScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text("Konsultasi Offline"),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     );
                   }),
