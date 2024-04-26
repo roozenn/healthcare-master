@@ -1,138 +1,151 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/screens/home_screen.dart';
 import 'package:healthcare/screens/sign_up_screen.dart';
-import 'package:healthcare/widgets/navbar_roots.dart';
+// import 'package:healthcare/screens/sign_up_screen.dart';
+// import 'package:healthcare/widgets/navbar_roots.dart';
 
-class loginScreen extends StatefulWidget {
-  @override
-  State<loginScreen> createState() => _loginScreenState();
-}
+class LogInScreenState extends StatelessWidget {
+  LogInScreenState({super.key});
 
-class _loginScreenState extends State<loginScreen> {
-  bool passToggle = true;
+  final GlobalKey<FormState> _logInKey = GlobalKey<FormState>();
+
+  Future<void> _submitForm() async {
+    if (_logInKey.currentState!.validate()) {
+      ScaffoldMessenger.of(_logInKey.currentContext!).showSnackBar(
+        const SnackBar(content: Text('Form submitted successfully')),
+      );
+    }
+  }
+
+  String? _validateEmail(value) {
+    if (value!.isEmpty) {
+      return '* Masukan Email';
+    }
+    RegExp emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegExp.hasMatch(value)) {
+      return '* Masukan Email yang Benar';
+    }
+    return null;
+  }
+
+  String? _validatePassword(value) {
+    if (value!.isEmpty) {
+      return '* Masukan Password';
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Image.asset(
-                  "images/doctors.png",
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Enter Username"),
-                    prefixIcon: Icon(Icons.person),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextField(
-                  obscureText: passToggle ? true : false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Enter Password"),
-                    prefixIcon: Icon(Icons.lock),
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        if (passToggle == true) {
-                          passToggle = false;
-                        } else {
-                          passToggle = true;
-                        }
-                        setState(() {});
-                      },
-                      child: passToggle
-                          ? Icon(CupertinoIcons.eye_slash_fill)
-                          : Icon(CupertinoIcons.eye_fill),
+    return Scaffold(
+      backgroundColor: Color.fromRGBO(95, 189, 255, 1),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 60),
+        child: Form(
+            key: _logInKey,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 10.0),
+                      child: Image.asset("assets/logoRectangle.png"),
                     ),
-                  ),
+                    Text(
+                      'doctstant',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                          fontSize: 50.0),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: InkWell(
-                  onTap: () {
+                SizedBox(height: 100.0),
+                Row(
+                  children: [
+                    Text(
+                      'berobat\nsemakin\nmudah!',
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 50.0),
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.mail),
+                    labelText: "Email",
+                    fillColor: Color.fromRGBO(255, 255, 255, 1),
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                  ),
+                  validator: _validateEmail
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock),
+                      labelText: "Password",
+                      fillColor: Color.fromRGBO(255, 255, 255, 1),
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                  validator: _validatePassword
+                ),
+                SizedBox(height: 20.0),
+                SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                  onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NavBarRoots(),
-                        ));
+                            builder: (context) => HomeScreen()));
                   },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF7165D6),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 4,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                          fontSize: 23,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                  child: Text(
+                    "Masuk",
+                    style: TextStyle(
+                        color: Colors.black, fontSize: 20.0),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(255, 229, 94, 1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUpScreen()));
+                  },
+                  child: Text(
+                    "Belum punya Akun? Daftar",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 15),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have any account?",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ));
-                    },
-                    child: Text(
-                      "Create Account",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF7165D6),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+                  ],
+                )
+              ],
+            )),
       ),
     );
   }
 }
+
